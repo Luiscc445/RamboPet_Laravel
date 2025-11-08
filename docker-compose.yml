@@ -1,0 +1,149 @@
+version: '3.8'
+
+services:
+  # Aplicación PHP-FPM
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rambopet_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - rambopet_network
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=rambopet
+      - DB_USERNAME=rambopet_user
+      - DB_PASSWORD=rambopet_secret
+      - REDIS_HOST=redis
+
+  # Servidor Web Nginx
+  nginx:
+    image: nginx:alpine
+    container_name: rambopet_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - rambopet_network
+    depends_on:
+      - app
+
+  # Base de Datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: rambopet_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: rambopet
+      MYSQL_USER: rambopet_user
+      MYSQL_PASSWORD: rambopet_secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - rambopet_network
+
+  # PHPMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: rambopet_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root_secret
+    networks:
+      - rambopet_network
+    depends_on:
+      - db
+
+  # Redis para Colas y Cache
+  redis:
+    image: redis:alpine
+    container_name: rambopet_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - rambopet_network
+
+  # Worker de Colas (Laravel Queue)
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rambopet_queue
+    restart: unless-stopped
+    working_dir: /var/www/html
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - rambopet_network
+    depends_on:
+      - app
+      - redis
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=rambopet
+      - DB_USERNAME=rambopet_user
+      - DB_PASSWORD=rambopet_secret
+      - REDIS_HOST=redis
+
+  # Scheduler (Laravel Cron)
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rambopet_scheduler
+    restart: unless-stopped
+    working_dir: /var/www/html
+    command: >
+      sh -c "while true; do
+        php artisan schedule:run --verbose --no-interaction &
+        sleep 60
+      done"
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - rambopet_network
+    depends_on:
+      - app
+      - redis
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=rambopet
+      - DB_USERNAME=rambopet_user
+      - DB_PASSWORD=rambopet_secret
+      - REDIS_HOST=redis
+
+networks:
+  rambopet_network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
+  redis_data:
+    driver: local
