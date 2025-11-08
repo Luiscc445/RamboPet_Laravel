@@ -24,11 +24,9 @@ Sistema moderno de gestión veterinaria desarrollado con Laravel, Filament PHP, 
 - **Vue Router**: Enrutamiento SPA
 
 ### Base de Datos e Infraestructura
-- **MySQL 8**: Base de datos relacional
-- **Redis**: Cache y colas
-- **Docker & Docker Compose**: Contenedorización
-- **Nginx**: Servidor web
-- **PHP-FPM**: Procesador PHP
+- **MySQL 8**: Base de datos relacional (PHPMyAdmin)
+- **PHP 8.2+**: Servidor nativo (XAMPP/WAMP/Laragon)
+- **Colas de Laravel**: Sistema de colas con driver database
 
 ## 📋 Características Principales
 
@@ -61,7 +59,10 @@ Sistema moderno de gestión veterinaria desarrollado con Laravel, Filament PHP, 
 ## 📦 Instalación
 
 ### Requisitos Previos
-- Docker y Docker Compose instalados
+- PHP 8.2 o superior (XAMPP, WAMP, Laragon)
+- Composer
+- Node.js 18+ y npm
+- MySQL 8.0
 - Git
 
 ### Pasos de Instalación
@@ -72,54 +73,76 @@ git clone <repository-url>
 cd RamboPet_Laravel
 ```
 
-2. **Copiar archivo de entorno**
-```bash
-cp .env.example .env
-```
+2. **Crear base de datos**
+- Abre PHPMyAdmin: http://localhost/phpmyadmin
+- Crea una base de datos llamada: `rambopet`
+- Cotejamiento: `utf8mb4_unicode_ci`
 
-3. **Levantar los contenedores Docker**
+3. **Copiar archivo de entorno**
 ```bash
-docker-compose up -d
+copy .env.example .env
 ```
 
 4. **Instalar dependencias PHP**
 ```bash
-docker-compose exec app composer install
+composer install
 ```
 
 5. **Generar clave de aplicación**
 ```bash
-docker-compose exec app php artisan key:generate
+php artisan key:generate
 ```
 
 6. **Ejecutar migraciones**
 ```bash
-docker-compose exec app php artisan migrate --seed
+php artisan migrate
 ```
 
-7. **Instalar dependencias Node.js**
+7. **Crear enlace simbólico de storage**
 ```bash
-docker-compose exec app npm install
+php artisan storage:link
 ```
 
-8. **Compilar assets**
+8. **Instalar dependencias Node.js**
 ```bash
-docker-compose exec app npm run build
+npm install
 ```
 
-9. **Crear enlace simbólico de storage**
+9. **Compilar assets**
 ```bash
-docker-compose exec app php artisan storage:link
+npm run build
+```
+
+10. **Crear usuario administrador**
+```bash
+php artisan tinker
+```
+
+Dentro de Tinker:
+```php
+$user = new App\Models\User();
+$user->name = 'Administrador';
+$user->email = 'admin@rambopet.com';
+$user->password = bcrypt('password123');
+$user->rol = 'admin';
+$user->activo = true;
+$user->save();
+exit
+```
+
+11. **Levantar el servidor**
+```bash
+php artisan serve
 ```
 
 ## 🔧 Configuración
 
 ### Accesos
 
-- **Aplicación Web**: http://localhost:8080
-- **Panel Admin (Filament)**: http://localhost:8080/admin
-- **PHPMyAdmin**: http://localhost:8081
-- **API**: http://localhost:8080/api/v1
+- **Aplicación Web**: http://localhost:8000
+- **Panel Admin (Filament)**: http://localhost:8000/admin
+- **PHPMyAdmin**: http://localhost/phpmyadmin
+- **API**: http://localhost:8000/api/v1
 
 ### Usuario Administrador por Defecto
 ```
@@ -133,47 +156,54 @@ Password: password
 
 **Ejecutar migrations**
 ```bash
-docker-compose exec app php artisan migrate
+php artisan migrate
 ```
 
 **Rollback migrations**
 ```bash
-docker-compose exec app php artisan migrate:rollback
+php artisan migrate:rollback
 ```
 
-**Refrescar base de datos con seeders**
+**Refrescar base de datos**
 ```bash
-docker-compose exec app php artisan migrate:fresh --seed
+php artisan migrate:fresh
 ```
 
-**Compilar assets en modo desarrollo**
+**Compilar assets en modo desarrollo (con hot reload)**
 ```bash
-docker-compose exec app npm run dev
+npm run dev
 ```
 
 **Ver logs de Laravel**
 ```bash
-docker-compose exec app tail -f storage/logs/laravel.log
+tail -f storage/logs/laravel.log
 ```
 
-**Acceder al contenedor de la aplicación**
+**Limpiar cache**
 ```bash
-docker-compose exec app bash
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
 ```
 
 ### Queue Workers
 
-El sistema utiliza Laravel Queues para procesar tareas en segundo plano. Los workers están configurados para ejecutarse automáticamente en el contenedor `queue`.
+El sistema utiliza Laravel Queues para procesar tareas en segundo plano.
+
+**Ejecutar el worker manualmente:**
+```bash
+php artisan queue:work
+```
 
 **Ver el estado de las colas:**
 ```bash
-docker-compose exec app php artisan queue:monitor
+php artisan queue:monitor
 ```
 
-**Reiniciar workers:**
-```bash
-docker-compose restart queue
-```
+**Configurar en producción:**
+- Usa Supervisor en Linux
+- Usa NSSM o Task Scheduler en Windows
 
 ### Tareas Programadas
 
@@ -186,13 +216,13 @@ Las tareas programadas se ejecutan automáticamente:
 **Ejecutar manualmente:**
 ```bash
 # Enviar recordatorios
-docker-compose exec app php artisan citas:enviar-recordatorios
+php artisan citas:enviar-recordatorios
 
 # Marcar citas perdidas
-docker-compose exec app php artisan citas:marcar-perdidas
+php artisan citas:marcar-perdidas
 
 # Alertas de stock
-docker-compose exec app php artisan inventario:alertas-stock
+php artisan inventario:alertas-stock
 ```
 
 ## 📊 Estructura del Proyecto
@@ -211,7 +241,6 @@ RamboPet_Laravel/
 ├── database/
 │   ├── migrations/               # Migraciones
 │   └── seeders/                  # Seeders
-├── docker/                       # Configuraciones Docker
 ├── resources/
 │   ├── css/                      # Estilos CSS
 │   ├── js/                       # Aplicación Vue.js
@@ -223,7 +252,6 @@ RamboPet_Laravel/
 │   ├── api.php                   # Rutas API
 │   ├── console.php               # Rutas de consola
 │   └── web.php                   # Rutas web
-├── docker-compose.yml            # Configuración Docker Compose
 └── README.md
 ```
 
@@ -253,10 +281,10 @@ RamboPet_Laravel/
 
 ```bash
 # Ejecutar tests
-docker-compose exec app php artisan test
+php artisan test
 
 # Tests con coverage
-docker-compose exec app php artisan test --coverage
+php artisan test --coverage
 ```
 
 ## 📝 API Endpoints Principales
