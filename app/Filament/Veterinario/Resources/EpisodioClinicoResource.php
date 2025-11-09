@@ -122,7 +122,7 @@ class EpisodioClinicoResource extends Resource
                             ->schema([
                                 Forms\Components\Select::make('producto_id')
                                     ->label('Medicamento')
-                                    ->options(Producto::where('tipo', 'medicamento')->pluck('nombre', 'id'))
+                                    ->options(Producto::where('categoria', 'medicamento')->pluck('nombre', 'id'))
                                     ->searchable()
                                     ->required(),
 
