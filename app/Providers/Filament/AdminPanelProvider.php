@@ -69,18 +69,9 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarWidth('16rem')
             ->maxContentWidth('full')
             ->navigationGroups([
-                'Gestión Clínica' => [
-                    'icon' => 'heroicon-o-heart',
-                    'collapsible' => true,
-                ],
-                'Inventario' => [
-                    'icon' => 'heroicon-o-cube',
-                    'collapsible' => true,
-                ],
-                'Administración' => [
-                    'icon' => 'heroicon-o-cog-6-tooth',
-                    'collapsible' => true,
-                ],
+                'Gestión Clínica',
+                'Inventario',
+                'Administración',
             ])
             ->breadcrumbs(true)
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
