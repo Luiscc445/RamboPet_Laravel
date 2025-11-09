@@ -18,30 +18,29 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class VeterinarioPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('veterinario')
+            ->path('veterinario')
             ->login()
             ->colors([
-                'primary' => Color::Emerald,
+                'primary' => Color::Blue,
                 'gray' => Color::Slate,
                 'success' => Color::Green,
-                'info' => Color::Blue,
+                'info' => Color::Cyan,
                 'warning' => Color::Amber,
                 'danger' => Color::Red,
             ])
             ->font('Inter')
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverResources(in: app_path('Filament/Veterinario/Resources'), for: 'App\\Filament\\Veterinario\\Resources')
+            ->discoverPages(in: app_path('Filament/Veterinario/Pages'), for: 'App\\Filament\\Veterinario\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Veterinario/Widgets'), for: 'App\\Filament\\Veterinario\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
             ])
@@ -59,8 +58,9 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->authGuard('web')
             ->spa()
-            ->brandName('RamboPet')
+            ->brandName('RamboPet - Veterinario')
             ->brandLogo(fn () => view('components.logo'))
             ->favicon(asset('favicon.ico'))
             ->darkMode(false)
@@ -69,9 +69,8 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarWidth('16rem')
             ->maxContentWidth('full')
             ->navigationGroups([
-                'Gestión Clínica',
-                'Inventario',
-                'Administración',
+                'Consultas',
+                'Pacientes',
             ])
             ->breadcrumbs(true)
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
@@ -79,7 +78,7 @@ class AdminPanelProvider extends PanelProvider
             ->userMenuItems([
                 'logout' => \Filament\Navigation\MenuItem::make()
                     ->label('Cerrar Sesión')
-                    ->url(fn () => route('filament.admin.auth.logout'))
+                    ->url(fn () => route('filament.veterinario.auth.logout'))
                     ->postAction()
             ]);
     }

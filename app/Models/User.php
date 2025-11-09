@@ -59,8 +59,21 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        // Solo usuarios con roles de staff pueden acceder al panel admin
-        return $this->activo && in_array($this->rol, ['admin', 'veterinario', 'recepcionista']);
+        if (!$this->activo) {
+            return false;
+        }
+
+        // Panel de administración: solo admin y recepcionistas
+        if ($panel->getId() === 'admin') {
+            return in_array($this->rol, ['admin', 'recepcionista']);
+        }
+
+        // Panel de veterinario: solo veterinarios
+        if ($panel->getId() === 'veterinario') {
+            return $this->rol === 'veterinario';
+        }
+
+        return false;
     }
 
     /**
