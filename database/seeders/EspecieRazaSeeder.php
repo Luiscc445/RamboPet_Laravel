@@ -41,88 +41,88 @@ class EspecieRazaSeeder extends Seeder
 
         // Razas de perros
         $razasPerros = [
-            ['nombre' => 'Labrador Retriever', 'caracteristicas' => 'Amigable, enérgico, ideal para familias'],
-            ['nombre' => 'Pastor Alemán', 'caracteristicas' => 'Inteligente, leal, buen guardián'],
-            ['nombre' => 'Golden Retriever', 'caracteristicas' => 'Amable, confiable, gentil'],
-            ['nombre' => 'Bulldog Francés', 'caracteristicas' => 'Juguetón, adaptable, sociable'],
-            ['nombre' => 'Beagle', 'caracteristicas' => 'Curioso, amigable, excelente olfato'],
-            ['nombre' => 'Poodle', 'caracteristicas' => 'Inteligente, activo, hipoalergénico'],
-            ['nombre' => 'Chihuahua', 'caracteristicas' => 'Pequeño, valiente, leal'],
-            ['nombre' => 'Yorkshire Terrier', 'caracteristicas' => 'Pequeño, enérgico, cariñoso'],
-            ['nombre' => 'Mestizo', 'caracteristicas' => 'Variado, único'],
+            ['nombre' => 'Labrador Retriever', 'descripcion' => 'Amigable, enérgico, ideal para familias'],
+            ['nombre' => 'Pastor Alemán', 'descripcion' => 'Inteligente, leal, buen guardián'],
+            ['nombre' => 'Golden Retriever', 'descripcion' => 'Amable, confiable, gentil'],
+            ['nombre' => 'Bulldog Francés', 'descripcion' => 'Juguetón, adaptable, sociable'],
+            ['nombre' => 'Beagle', 'descripcion' => 'Curioso, amigable, excelente olfato'],
+            ['nombre' => 'Poodle', 'descripcion' => 'Inteligente, activo, hipoalergénico'],
+            ['nombre' => 'Chihuahua', 'descripcion' => 'Pequeño, valiente, leal'],
+            ['nombre' => 'Yorkshire Terrier', 'descripcion' => 'Pequeño, enérgico, cariñoso'],
+            ['nombre' => 'Mestizo', 'descripcion' => 'Variado, único'],
         ];
 
         foreach ($razasPerros as $raza) {
             Raza::create([
                 'especie_id' => $perro->id,
                 'nombre' => $raza['nombre'],
-                'caracteristicas' => $raza['caracteristicas'],
+                'descripcion' => $raza['descripcion'],
             ]);
         }
 
         // Razas de gatos
         $razasGatos = [
-            ['nombre' => 'Persa', 'caracteristicas' => 'Tranquilo, pelaje largo, cara achatada'],
-            ['nombre' => 'Siamés', 'caracteristicas' => 'Vocal, sociable, elegante'],
-            ['nombre' => 'Maine Coon', 'caracteristicas' => 'Grande, pelaje largo, amigable'],
-            ['nombre' => 'Bengalí', 'caracteristicas' => 'Activo, patrón de leopardo, juguetón'],
-            ['nombre' => 'Británico de Pelo Corto', 'caracteristicas' => 'Robusto, independiente, tranquilo'],
-            ['nombre' => 'Ragdoll', 'caracteristicas' => 'Dócil, relajado, ojos azules'],
-            ['nombre' => 'Mestizo', 'caracteristicas' => 'Variado, único'],
+            ['nombre' => 'Persa', 'descripcion' => 'Tranquilo, pelaje largo, cara achatada'],
+            ['nombre' => 'Siamés', 'descripcion' => 'Vocal, sociable, elegante'],
+            ['nombre' => 'Maine Coon', 'descripcion' => 'Grande, pelaje largo, amigable'],
+            ['nombre' => 'Bengalí', 'descripcion' => 'Activo, patrón de leopardo, juguetón'],
+            ['nombre' => 'Británico de Pelo Corto', 'descripcion' => 'Robusto, independiente, tranquilo'],
+            ['nombre' => 'Ragdoll', 'descripcion' => 'Dócil, relajado, ojos azules'],
+            ['nombre' => 'Mestizo', 'descripcion' => 'Variado, único'],
         ];
 
         foreach ($razasGatos as $raza) {
             Raza::create([
                 'especie_id' => $gato->id,
                 'nombre' => $raza['nombre'],
-                'caracteristicas' => $raza['caracteristicas'],
+                'descripcion' => $raza['descripcion'],
             ]);
         }
 
         // Tipos de aves
         $tiposAves = [
-            ['nombre' => 'Canario', 'caracteristicas' => 'Pequeño, cantarín, amarillo'],
-            ['nombre' => 'Periquito', 'caracteristicas' => 'Sociable, colorido, fácil cuidado'],
-            ['nombre' => 'Loro', 'caracteristicas' => 'Inteligente, puede hablar, longevo'],
-            ['nombre' => 'Ninfa', 'caracteristicas' => 'Cresta característica, sociable'],
+            ['nombre' => 'Canario', 'descripcion' => 'Pequeño, cantarín, amarillo'],
+            ['nombre' => 'Periquito', 'descripcion' => 'Sociable, colorido, fácil cuidado'],
+            ['nombre' => 'Loro', 'descripcion' => 'Inteligente, puede hablar, longevo'],
+            ['nombre' => 'Ninfa', 'descripcion' => 'Cresta característica, sociable'],
         ];
 
         foreach ($tiposAves as $tipo) {
             Raza::create([
                 'especie_id' => $ave->id,
                 'nombre' => $tipo['nombre'],
-                'caracteristicas' => $tipo['caracteristicas'],
+                'descripcion' => $tipo['descripcion'],
             ]);
         }
 
         // Tipos de roedores
         $tiposRoedores = [
-            ['nombre' => 'Hámster', 'caracteristicas' => 'Pequeño, nocturno, cachetes grandes'],
-            ['nombre' => 'Conejo', 'caracteristicas' => 'Sociable, herbívoro, orejas largas'],
-            ['nombre' => 'Cobayo', 'caracteristicas' => 'Dócil, vocal, sociable'],
-            ['nombre' => 'Chinchilla', 'caracteristicas' => 'Pelaje suave, nocturna, activa'],
+            ['nombre' => 'Hámster', 'descripcion' => 'Pequeño, nocturno, cachetes grandes'],
+            ['nombre' => 'Conejo', 'descripcion' => 'Sociable, herbívoro, orejas largas'],
+            ['nombre' => 'Cobayo', 'descripcion' => 'Dócil, vocal, sociable'],
+            ['nombre' => 'Chinchilla', 'descripcion' => 'Pelaje suave, nocturna, activa'],
         ];
 
         foreach ($tiposRoedores as $tipo) {
             Raza::create([
                 'especie_id' => $roedor->id,
                 'nombre' => $tipo['nombre'],
-                'caracteristicas' => $tipo['caracteristicas'],
+                'descripcion' => $tipo['descripcion'],
             ]);
         }
 
         // Tipos de reptiles
         $tiposReptiles = [
-            ['nombre' => 'Iguana', 'caracteristicas' => 'Herbívoro, arborícola, necesita calor'],
-            ['nombre' => 'Gecko', 'caracteristicas' => 'Pequeño, nocturno, fácil manejo'],
-            ['nombre' => 'Tortuga', 'caracteristicas' => 'Longeva, caparazón, tranquila'],
+            ['nombre' => 'Iguana', 'descripcion' => 'Herbívoro, arborícola, necesita calor'],
+            ['nombre' => 'Gecko', 'descripcion' => 'Pequeño, nocturno, fácil manejo'],
+            ['nombre' => 'Tortuga', 'descripcion' => 'Longeva, caparazón, tranquila'],
         ];
 
         foreach ($tiposReptiles as $tipo) {
             Raza::create([
                 'especie_id' => $reptil->id,
                 'nombre' => $tipo['nombre'],
-                'caracteristicas' => $tipo['caracteristicas'],
+                'descripcion' => $tipo['descripcion'],
             ]);
         }
 
