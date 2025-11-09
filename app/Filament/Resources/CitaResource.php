@@ -25,6 +25,19 @@ class CitaResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Citas';
 
+    protected static ?string $navigationLabel = 'Agenda de Citas';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereDate('fecha_hora', today())->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $count = static::getModel()::whereDate('fecha_hora', today())->count();
+        return $count > 10 ? 'danger' : ($count > 5 ? 'warning' : 'info');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

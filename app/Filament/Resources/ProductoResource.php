@@ -24,6 +24,25 @@ class ProductoResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Productos';
 
+    protected static ?string $navigationLabel = 'Productos';
+
+    protected static ?string $recordTitleAttribute = 'nombre';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('stock_actual', '<=', 'stock_minimo')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Productos con stock bajo';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

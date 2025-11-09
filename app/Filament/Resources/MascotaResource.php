@@ -27,6 +27,20 @@ class MascotaResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Mascotas';
 
+    protected static ?string $navigationLabel = 'Mascotas';
+
+    protected static ?string $recordTitleAttribute = 'nombre';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

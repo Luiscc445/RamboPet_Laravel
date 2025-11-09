@@ -24,6 +24,20 @@ class TutorResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Tutores';
 
+    protected static ?string $navigationLabel = 'Tutores';
+
+    protected static ?string $recordTitleAttribute = 'nombre_completo';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('activo', true)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

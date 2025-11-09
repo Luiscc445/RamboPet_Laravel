@@ -28,8 +28,14 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Emerald,
+                'gray' => Color::Slate,
+                'success' => Color::Green,
+                'info' => Color::Blue,
+                'warning' => Color::Amber,
+                'danger' => Color::Red,
             ])
+            ->font('Inter')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -38,7 +44,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -56,15 +61,30 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->spa()
             ->brandName('RamboPet')
-            ->brandLogo(asset('images/logo.png'))
-            ->favicon(asset('images/favicon.png'))
+            ->brandLogo(fn () => view('components.logo'))
+            ->favicon(asset('favicon.ico'))
             ->darkMode(false)
+            ->topNavigation(false)
             ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('16rem')
+            ->maxContentWidth('full')
             ->navigationGroups([
-                'Gestión Clínica',
-                'Inventario',
-                'Administración',
-                'Configuración',
-            ]);
+                'Gestión Clínica' => [
+                    'icon' => 'heroicon-o-heart',
+                    'collapsible' => true,
+                ],
+                'Inventario' => [
+                    'icon' => 'heroicon-o-cube',
+                    'collapsible' => true,
+                ],
+                'Administración' => [
+                    'icon' => 'heroicon-o-cog-6-tooth',
+                    'collapsible' => true,
+                ],
+            ])
+            ->breadcrumbs(true)
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s');
     }
 }
