@@ -73,6 +73,16 @@ class User extends Authenticatable implements FilamentUser
             return $this->rol === 'veterinario';
         }
 
+        // Panel de laboratorio: solo laboratoristas
+        if ($panel->getId() === 'laboratorio') {
+            return $this->rol === 'laboratorista';
+        }
+
+        // Panel de imagenología: solo ecografistas
+        if ($panel->getId() === 'imagenologia') {
+            return $this->rol === 'ecografista';
+        }
+
         return false;
     }
 
@@ -101,6 +111,22 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
+     * Verifica si el usuario es laboratorista.
+     */
+    public function isLaboratorista(): bool
+    {
+        return $this->rol === 'laboratorista';
+    }
+
+    /**
+     * Verifica si el usuario es ecografista.
+     */
+    public function isEcografista(): bool
+    {
+        return $this->rol === 'ecografista';
+    }
+
+    /**
      * Citas atendidas por este usuario (si es veterinario).
      */
     public function citasAtendidas()
@@ -114,5 +140,21 @@ class User extends Authenticatable implements FilamentUser
     public function citasCreadas()
     {
         return $this->hasMany(Cita::class, 'creado_por');
+    }
+
+    /**
+     * Exámenes de laboratorio asignados a este usuario (si es laboratorista).
+     */
+    public function examenesLaboratorio()
+    {
+        return $this->hasMany(ExamenLaboratorio::class, 'laboratorista_id');
+    }
+
+    /**
+     * Exámenes de imagen asignados a este usuario (si es ecografista).
+     */
+    public function examenesImagen()
+    {
+        return $this->hasMany(ExamenImagen::class, 'ecografista_id');
     }
 }

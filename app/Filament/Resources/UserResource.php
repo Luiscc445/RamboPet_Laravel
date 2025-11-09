@@ -58,6 +58,8 @@ class UserResource extends Resource
                                 'admin' => 'Administrador',
                                 'veterinario' => 'Veterinario',
                                 'recepcionista' => 'Recepcionista',
+                                'laboratorista' => 'Laboratorista',
+                                'ecografista' => 'Ecografista / Imagenólogo',
                             ])
                             ->required()
                             ->native(false)
