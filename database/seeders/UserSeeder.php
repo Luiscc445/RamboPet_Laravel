@@ -25,8 +25,20 @@ class UserSeeder extends Seeder
             'activo' => true,
         ]);
 
-        $this->command->info('✓ Usuario administrador creado correctamente');
-        $this->command->info('  → Admin: admin@rambopet.cl / Haaland900');
-        $this->command->info('  → Usuario: LuisCFD79');
+        // Crear usuario veterinario de prueba
+        User::create([
+            'name' => 'Dr. Juan Pérez',
+            'email' => 'veterinario@rambopet.cl',
+            'password' => Hash::make('vet123'),
+            'rol' => 'veterinario',
+            'telefono' => '+56987654321',
+            'rut' => '11223344-5',
+            'direccion' => 'Santiago, Chile',
+            'activo' => true,
+        ]);
+
+        $this->command->info('✓ Usuarios creados correctamente');
+        $this->command->info('  → Admin: admin@rambopet.cl / Haaland900 (Usuario: LuisCFD79)');
+        $this->command->info('  → Veterinario: veterinario@rambopet.cl / vet123 (Dr. Juan Pérez)');
     }
 }
