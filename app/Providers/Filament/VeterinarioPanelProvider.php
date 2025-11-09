@@ -74,12 +74,6 @@ class VeterinarioPanelProvider extends PanelProvider
             ])
             ->breadcrumbs(true)
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
-            ->profile()
-            ->userMenuItems([
-                'logout' => \Filament\Navigation\MenuItem::make()
-                    ->label('Cerrar Sesión')
-                    ->url(fn () => route('filament.veterinario.auth.logout'))
-                    ->postAction()
-            ]);
+            ->profile();
     }
 }
