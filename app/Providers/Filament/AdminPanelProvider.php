@@ -74,8 +74,6 @@ class AdminPanelProvider extends PanelProvider
                 'Administración',
             ])
             ->breadcrumbs(true)
-            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
-            ->databaseNotifications()
-            ->databaseNotificationsPolling('30s');
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k']);
     }
 }
