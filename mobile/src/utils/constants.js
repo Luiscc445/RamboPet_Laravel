@@ -31,6 +31,7 @@ export const TIPOS_CONSULTA = {
   vacunacion: 'Vacunación',
   cirugia: 'Cirugía',
   urgencia: 'Urgencia',
+  emergencia: 'Emergencia',
   control: 'Control',
   peluqueria: 'Peluquería',
 };
