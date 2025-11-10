@@ -47,3 +47,7 @@ yarn-error.log
 
 # Credenciales sensibles
 SUPABASE_CREDENTIALS.md
+
+# Base de datos SQLite local
+database/*.sqlite
+database/*.sqlite-journal
