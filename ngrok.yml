@@ -9,10 +9,8 @@ tunnels:
     proto: http
     addr: 8000
     inspect: true
-    bind_tls: true
 
   frontend:
     proto: http
     addr: 8081
     inspect: true
-    bind_tls: true
