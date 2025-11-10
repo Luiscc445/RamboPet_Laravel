@@ -2,29 +2,23 @@
 // CONFIGURACIÓN DE API - RamboPet
 // ========================================
 //
-// SISTEMA DE DOBLE TÚNEL NGROK:
-// 1. Túnel Backend  (Laravel API)    - Puerto 8000
-// 2. Túnel Frontend (React Native)   - Puerto 8081
+// Backend Laravel corre en puerto 8000
+// App móvil se expone en puerto 8081 usando localtunnel
 //
-// Para iniciar ambos túneles:
-//   Windows: start-ngrok-dual.bat
-//   Linux/Mac: ./start-ngrok-dual.sh
-//
-// O iniciar todo automáticamente:
-//   Windows: start-all.bat
+// Para iniciar:
+//   1. Backend: php artisan serve --port=8000
+//   2. App móvil: npm start (en carpeta mobile)
+//   3. Túnel web: npm run tunnel (en carpeta mobile)
 //
 // ========================================
 
 // URL del Backend Laravel (API REST)
-// Cámbiala por la URL del túnel "backend" que aparece en ngrok
-export const API_BASE_URL = 'https://nonspecialized-unstatistically-eliza.ngrok-free.dev/api/mobile';
+// Opción 1: Localhost (desarrollo en el mismo equipo) - RECOMENDADO para desarrollo local
+export const API_BASE_URL = 'http://localhost:8000/api/mobile';
 
-// ALTERNATIVAS:
-// Opción 1: IP local (solo funciona en la misma red WiFi)
+// Opción 2: IP local (desde otro dispositivo en la misma red WiFi)
+// Cambia la IP por la de tu computadora (ejecuta: ipconfig en Windows o ifconfig en Linux/Mac)
 // export const API_BASE_URL = 'http://192.168.0.72:8000/api/mobile';
-
-// Opción 2: Localhost (solo para desarrollo en el mismo equipo)
-// export const API_BASE_URL = 'http://localhost:8000/api/mobile';
 
 // Credenciales de prueba
 export const DEFAULT_CREDENTIALS = {
