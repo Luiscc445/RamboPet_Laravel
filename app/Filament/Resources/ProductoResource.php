@@ -30,7 +30,7 @@ class ProductoResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('stock_actual', '<=', 'stock_minimo')->count() ?: null;
+        return static::getModel()::whereColumn('stock_actual', '<=', 'stock_minimo')->count() ?: null;
     }
 
     public static function getNavigationBadgeColor(): ?string
