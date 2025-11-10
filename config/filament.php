@@ -28,6 +28,6 @@ return [
     'search_debounce' => 300,
 
     // Optimizar assets
-    'optimize_assets' => !app()->isLocal(),
+    'optimize_assets' => env('APP_ENV', 'production') !== 'local',
 
 ];

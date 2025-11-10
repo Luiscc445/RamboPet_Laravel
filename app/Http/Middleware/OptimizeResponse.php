@@ -24,7 +24,7 @@ class OptimizeResponse
                 $content = $response->getContent();
 
                 // Minificar HTML
-                if (!app()->isLocal()) {
+                if (config('app.env') !== 'local') {
                     $content = $this->minifyHtml($content);
                 }
 

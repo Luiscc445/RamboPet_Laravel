@@ -29,7 +29,7 @@ class PerformanceServiceProvider extends ServiceProvider
         }
 
         // 2. OPTIMIZACIÓN: Lazy loading estricto (detecta N+1)
-        Model::preventLazyLoading(!app()->isProduction());
+        Model::preventLazyLoading(config('app.env') !== 'production');
 
         // 3. OPTIMIZACIÓN: Cache agresivo de queries comunes
         $this->cacheCommonQueries();
