@@ -1,10 +1,12 @@
-// IMPORTANTE: Cambia esta IP a la IP de tu computadora en la red local
-// Para encontrar tu IP:
-// Windows: ipconfig (busca IPv4)
-// Mac/Linux: ifconfig (busca inet)
-// Ejemplo: http://192.168.1.100:8000
+// CONFIGURACIÓN DE API
+// Opción 1: Usar ngrok (recomendado para desarrollo y testing remoto)
+// Opción 2: Usar IP local (solo funciona en la misma red WiFi)
 
-export const API_BASE_URL = 'http://192.168.0.72:8000/api/mobile';
+// URL de ngrok - Cambia esta cuando inicies un nuevo túnel ngrok
+export const API_BASE_URL = 'https://nonspecialized-unstatistically-eliza.ngrok-free.dev/api/mobile';
+
+// URL local alternativa (descomenta para usar en red local)
+// export const API_BASE_URL = 'http://192.168.0.72:8000/api/mobile';
 
 // Credenciales de prueba
 export const DEFAULT_CREDENTIALS = {

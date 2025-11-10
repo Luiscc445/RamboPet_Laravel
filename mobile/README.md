@@ -13,6 +13,29 @@ npm install
 
 ### 2. Configurar la URL del API
 
+Tienes **dos opciones** para configurar la conexión al backend:
+
+#### Opción A: Usar ngrok (Recomendado) 🌐
+
+ngrok permite probar la app desde cualquier lugar sin necesidad de estar en la misma red WiFi.
+
+**Ver la guía completa:** [NGROK_SETUP.md](../NGROK_SETUP.md) en la raíz del proyecto.
+
+**Configuración rápida:**
+
+1. Instala ngrok: https://ngrok.com/download
+2. Ejecuta en la raíz del proyecto (Windows):
+   ```cmd
+   start-dev.bat
+   ```
+3. Copia la URL HTTPS de ngrok (ej: `https://xxxx-xxxx.ngrok-free.dev`)
+4. Edita `src/utils/constants.js`:
+   ```javascript
+   export const API_BASE_URL = 'https://TU-URL-NGROK/api/mobile';
+   ```
+
+#### Opción B: Usar IP local (Solo misma red WiFi) 📡
+
 Edita `src/utils/constants.js` y cambia la IP a la de tu computadora:
 
 ```javascript
@@ -21,8 +44,10 @@ Edita `src/utils/constants.js` y cambia la IP a la de tu computadora:
 // Mac/Linux: ifconfig o ip addr
 
 export const API_BASE_URL = 'http://TU_IP_LOCAL:8000/api/mobile';
-// Ejemplo: http://192.168.1.100:8000/api/mobile
+// Ejemplo: http://192.168.0.72:8000/api/mobile
 ```
+
+⚠️ **Importante:** Tu teléfono y PC deben estar en la misma red WiFi.
 
 ### 3. Iniciar el servidor Laravel
 
