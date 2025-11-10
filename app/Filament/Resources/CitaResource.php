@@ -38,6 +38,15 @@ class CitaResource extends Resource
         return $count > 10 ? 'danger' : ($count > 5 ? 'warning' : 'info');
     }
 
+    /**
+     * Optimización: Eager loading de relaciones para evitar N+1 queries
+     */
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['mascota.tutor', 'mascota.especie', 'mascota.raza', 'veterinario']);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

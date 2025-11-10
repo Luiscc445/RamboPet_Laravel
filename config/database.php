@@ -69,6 +69,12 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
+            // Optimizaciones para PostgreSQL
+            'options' => extension_loaded('pdo_pgsql') ? [
+                PDO::ATTR_PERSISTENT => true, // Conexiones persistentes
+                PDO::ATTR_EMULATE_PREPARES => false, // Prepared statements nativos
+                PDO::ATTR_STRINGIFY_FETCHES => false, // Tipos de datos nativos
+            ] : [],
         ],
 
         'sqlsrv' => [
