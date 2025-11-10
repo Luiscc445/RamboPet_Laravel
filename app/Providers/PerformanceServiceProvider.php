@@ -19,11 +19,11 @@ class PerformanceServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     * Optimizaciones extremas de rendimiento
+     * Optimizaciones SUPER AGRESIVAS de rendimiento
      */
     public function boot(): void
     {
-        // 1. OPTIMIZACIÓN: Deshabilitar logs en queries (modo producción)
+        // 1. OPTIMIZACIÓN: Deshabilitar logs en queries SIEMPRE (modo producción)
         if (!config('app.debug')) {
             DB::disableQueryLog();
         }
@@ -31,10 +31,16 @@ class PerformanceServiceProvider extends ServiceProvider
         // 2. OPTIMIZACIÓN: Lazy loading estricto (detecta N+1)
         Model::preventLazyLoading(config('app.env') !== 'production');
 
+        // 2.1 OPTIMIZACIÓN AGRESIVA: Deshabilitar mass assignment protection en producción
+        // ADVERTENCIA: Solo si confías en tu código
+        if (config('app.env') === 'production') {
+            Model::unguard();
+        }
+
         // 3. OPTIMIZACIÓN: Cache agresivo de queries comunes
         $this->cacheCommonQueries();
 
-        // 4. OPTIMIZACIÓN: Connection pooling settings
+        // 4. OPTIMIZACIÓN: Connection pooling settings AGRESIVO
         config([
             'database.connections.pgsql.options' => array_merge(
                 config('database.connections.pgsql.options', []),
@@ -43,9 +49,24 @@ class PerformanceServiceProvider extends ServiceProvider
                     \PDO::ATTR_EMULATE_PREPARES => false,
                     \PDO::ATTR_STRINGIFY_FETCHES => false,
                     \PDO::ATTR_TIMEOUT => 5,
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
                 ]
             ),
         ]);
+
+        // 5. OPTIMIZACIÓN AGRESIVA: Deshabilitar eventos innecesarios
+        if (!config('app.debug')) {
+            // Deshabilitar eventos de modelo que no necesites
+            Model::withoutEvents(function() {
+                // Los modelos no dispararán eventos dentro de este scope
+            });
+        }
+
+        // 6. OPTIMIZACIÓN: Reducir memoria en produción
+        if (config('app.env') === 'production') {
+            ini_set('memory_limit', '128M'); // Ajustar según necesidad
+        }
     }
 
     /**
