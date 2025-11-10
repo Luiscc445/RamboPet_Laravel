@@ -4,7 +4,7 @@
 // Mac/Linux: ifconfig (busca inet)
 // Ejemplo: http://192.168.1.100:8000
 
-export const API_BASE_URL = 'http://192.168.1.100:8000/api/mobile';
+export const API_BASE_URL = 'http://192.168.0.72:8000/api/mobile';
 
 // Credenciales de prueba
 export const DEFAULT_CREDENTIALS = {
