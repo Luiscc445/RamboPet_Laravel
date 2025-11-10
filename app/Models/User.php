@@ -63,9 +63,14 @@ class User extends Authenticatable implements FilamentUser
             return false;
         }
 
-        // Panel de administración: solo admin y recepcionistas
+        // Panel de administración: solo admin
         if ($panel->getId() === 'admin') {
-            return in_array($this->rol, ['admin', 'recepcionista']);
+            return $this->rol === 'admin';
+        }
+
+        // Panel de recepción: solo recepcionistas
+        if ($panel->getId() === 'recepcion') {
+            return $this->rol === 'recepcionista';
         }
 
         // Panel de veterinario: solo veterinarios

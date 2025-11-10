@@ -49,7 +49,7 @@
         </div>
 
         <!-- Botones de Selección -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full max-w-7xl mb-8">
             <!-- Administrador -->
             <a href="{{ route('filament.admin.auth.login') }}"
                class="group relative flex flex-col items-center p-6 bg-white border-2 border-gray-200 rounded-2xl hover:border-emerald-500 hover:shadow-xl transition-all duration-200 transform hover:scale-105">
@@ -117,6 +117,24 @@
                 <h3 class="text-lg font-bold text-gray-900 mb-2">Imagenología</h3>
                 <p class="text-xs text-gray-600 text-center mb-3">Ecografías y estudios de imagen</p>
                 <div class="mt-auto flex items-center text-cyan-600 group-hover:translate-x-2 transition-transform">
+                    <span class="text-sm font-medium">Acceder</span>
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Recepción -->
+            <a href="{{ route('filament.recepcion.auth.login') }}"
+               class="group relative flex flex-col items-center p-6 bg-white border-2 border-gray-200 rounded-2xl hover:border-orange-500 hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                <div class="p-3 bg-orange-100 rounded-full mb-3">
+                    <svg class="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Recepción</h3>
+                <p class="text-xs text-gray-600 text-center mb-3">Agenda y gestión de citas</p>
+                <div class="mt-auto flex items-center text-orange-600 group-hover:translate-x-2 transition-transform">
                     <span class="text-sm font-medium">Acceder</span>
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

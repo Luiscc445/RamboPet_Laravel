@@ -6,12 +6,14 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Providers\Filament\VeterinarioPanelProvider;
 use App\Providers\Filament\LaboratorioPanelProvider;
 use App\Providers\Filament\ImagenologiaPanelProvider;
+use App\Providers\Filament\RecepcionPanelProvider;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withProviders([
         VeterinarioPanelProvider::class,
         LaboratorioPanelProvider::class,
         ImagenologiaPanelProvider::class,
+        RecepcionPanelProvider::class,
     ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
