@@ -10,7 +10,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { authAPI } from '../../api';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function RegisterScreen({ navigation }) {
   const [formData, setFormData] = useState({
@@ -23,6 +23,7 @@ export default function RegisterScreen({ navigation }) {
     password_confirmation: '',
   });
   const [loading, setLoading] = useState(false);
+  const { register } = useAuth();
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -47,18 +48,13 @@ export default function RegisterScreen({ navigation }) {
 
     try {
       setLoading(true);
-      await authAPI.register(formData);
+      await register(formData);
 
       Alert.alert(
         'Registro exitoso',
-        'Tu cuenta ha sido creada correctamente',
-        [
-          {
-            text: 'OK',
-            onPress: () => navigation.replace('Main'),
-          },
-        ]
+        'Tu cuenta ha sido creada correctamente'
       );
+      // La navegación se manejará automáticamente por el AppNavigator
     } catch (error) {
       console.error('Error de registro:', error);
       Alert.alert(

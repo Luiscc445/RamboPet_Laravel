@@ -11,13 +11,14 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { authAPI } from '../../api';
+import { useAuth } from '../../contexts/AuthContext';
 import { DEFAULT_CREDENTIALS } from '../../utils/constants';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState(DEFAULT_CREDENTIALS.email);
   const [password, setPassword] = useState(DEFAULT_CREDENTIALS.password);
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -27,11 +28,8 @@ export default function LoginScreen({ navigation }) {
 
     try {
       setLoading(true);
-      await authAPI.login(email, password);
-
+      await login(email, password);
       // La navegación se manejará automáticamente por el AppNavigator
-      // cuando detecte que hay una sesión activa
-      navigation.replace('Main');
     } catch (error) {
       console.error('Error de login:', error);
       Alert.alert(

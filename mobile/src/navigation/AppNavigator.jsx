@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,7 +16,7 @@ import CitasListScreen from '../screens/Citas/CitasListScreen';
 import AgendarCitaScreen from '../screens/Citas/AgendarCitaScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 
-import { authAPI } from '../api';
+import { useAuth } from '../contexts/AuthContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -118,26 +118,9 @@ function AuthStack() {
 
 // Navegador Principal
 export default function AppNavigator() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, loading } = useAuth();
 
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const checkAuthStatus = async () => {
-    try {
-      const authStatus = await authAPI.checkAuth();
-      setIsAuthenticated(authStatus.isAuthenticated);
-    } catch (error) {
-      console.error('Error al verificar autenticación:', error);
-      setIsAuthenticated(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
+  if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator size="large" color="#10b981" />

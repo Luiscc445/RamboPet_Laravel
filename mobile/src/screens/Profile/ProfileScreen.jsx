@@ -1,23 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { authAPI } from '../../api';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function ProfileScreen({ navigation }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    loadUser();
-  }, []);
-
-  const loadUser = async () => {
-    try {
-      const userData = await authAPI.getMe();
-      setUser(userData);
-    } catch (error) {
-      console.error('Error cargando usuario:', error);
-    }
-  };
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
     Alert.alert(
@@ -30,8 +17,8 @@ export default function ProfileScreen({ navigation }) {
           style: 'destructive',
           onPress: async () => {
             try {
-              await authAPI.logout();
-              navigation.replace('Auth');
+              await logout();
+              // La navegación se manejará automáticamente por el AppNavigator
             } catch (error) {
               console.error('Error al cerrar sesión:', error);
             }
