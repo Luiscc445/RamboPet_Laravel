@@ -55,28 +55,33 @@ class PerformanceServiceProvider extends ServiceProvider
     {
         // Solo en producción o si cache está habilitado
         if (!config('app.debug')) {
-            // Cache de especies (raramente cambian)
-            if (!Cache::has('especies_all')) {
-                Cache::remember('especies_all', 3600, function () {
-                    return \App\Models\Especie::all();
-                });
-            }
+            try {
+                // Cache de especies (raramente cambian)
+                if (!Cache::has('especies_all')) {
+                    Cache::remember('especies_all', 3600, function () {
+                        return \App\Models\Especie::all();
+                    });
+                }
 
-            // Cache de razas por especie
-            if (!Cache::has('razas_all')) {
-                Cache::remember('razas_all', 3600, function () {
-                    return \App\Models\Raza::with('especie')->get();
-                });
-            }
+                // Cache de razas por especie
+                if (!Cache::has('razas_all')) {
+                    Cache::remember('razas_all', 3600, function () {
+                        return \App\Models\Raza::with('especie')->get();
+                    });
+                }
 
-            // Cache de veterinarios activos
-            if (!Cache::has('veterinarios_activos')) {
-                Cache::remember('veterinarios_activos', 600, function () {
-                    return \App\Models\User::where('rol', 'veterinario')
-                        ->where('activo', true)
-                        ->select('id', 'name', 'email')
-                        ->get();
-                });
+                // Cache de veterinarios activos
+                if (!Cache::has('veterinarios_activos')) {
+                    Cache::remember('veterinarios_activos', 600, function () {
+                        return \App\Models\User::where('rol', 'veterinario')
+                            ->where('activo', true)
+                            ->select('id', 'name', 'email')
+                            ->get();
+                    });
+                }
+            } catch (\Exception $e) {
+                // Silently fail during installation or if cache/DB not ready
+                // This is expected during composer install
             }
         }
     }

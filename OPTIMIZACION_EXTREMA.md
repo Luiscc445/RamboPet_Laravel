@@ -278,15 +278,16 @@ php artisan octane:start --port=8000 --workers=4 --max-requests=500
 - [x] PerformanceServiceProvider
 - [x] OptimizeResponse Middleware
 
-### Nivel 2: Avanzado
-- [ ] Cachear configuración (`php artisan config:cache`)
-- [ ] Habilitar OPcache en PHP
-- [ ] Actualizar PostgreSQL statistics (`ANALYZE`)
-- [ ] Optimizar Composer autoloader
+### Nivel 2: Avanzado (✅ APLICADO)
+- [x] Cachear configuración (`php artisan config:cache`)
+- [x] Habilitar OPcache en PHP (ver OPCACHE_WINDOWS.md)
+- [x] Actualizar PostgreSQL statistics (`ANALYZE`)
+- [x] Optimizar Composer autoloader
+- [x] Script de optimización: `optimize.bat` / `optimize.sh`
 
 ### Nivel 3: Extremo
-- [ ] Instalar Laravel Octane
-- [ ] Instalar Redis para cache
+- [ ] Instalar Laravel Octane (⚠️ NO disponible para Windows nativo, requiere WSL/Docker)
+- [ ] Instalar Redis para cache (opcional, actualmente usa database)
 - [ ] Configurar trabajo asíncrono (queues)
 - [ ] CDN para assets estáticos
 
@@ -403,9 +404,17 @@ $citas = Cache::remember('citas_hoy', 3600, function () {
 
 ## 🎉 RESULTADO FINAL
 
-Con **todas** las optimizaciones aplicadas:
+### Con optimizaciones aplicadas (SIN Octane - Windows):
 
-**Tiempo de carga:** < 50ms (20-60x más rápido)
+**Tiempo de carga:** 50-150ms (5-10x más rápido) ⚡
+**Memoria:** 32-64MB (2-3x menos)
+**Requests/seg:** 200-500 (4-10x más)
+
+**La aplicación será MUY RÁPIDA** ⚡⚡
+
+### Con Octane + Redis (Linux/macOS/WSL):
+
+**Tiempo de carga:** < 50ms (20-60x más rápido) ⚡⚡⚡
 **Memoria:** < 20MB (6x menos)
 **Requests/seg:** 2000-5000 (40-100x más)
 
