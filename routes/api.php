@@ -67,16 +67,24 @@ Route::prefix('mobile')->middleware('auth:sanctum')->group(function () {
 
     // Perfil del tutor
     Route::get('/tutor/profile', [MobileController::class, 'getTutorProfile']);
+    Route::put('/tutor/profile', [MobileController::class, 'updateTutorProfile']);
+
+    // Catálogos
+    Route::get('/especies', [MobileController::class, 'getEspecies']);
+    Route::get('/razas', [MobileController::class, 'getRazas']);
 
     // Mascotas
     Route::get('/mascotas', [MobileController::class, 'getMascotas']);
     Route::post('/mascotas', [MobileController::class, 'storeMascota']);
+    Route::put('/mascotas/{id}', [MobileController::class, 'updateMascota']);
+    Route::delete('/mascotas/{id}', [MobileController::class, 'deleteMascota']);
 
     // Veterinarios disponibles
     Route::get('/veterinarios', [MobileController::class, 'getVeterinarios']);
 
     // Citas
     Route::get('/citas', [MobileController::class, 'getCitas']);
+    Route::get('/citas/{id}', [MobileController::class, 'getCita']);
     Route::post('/citas', [MobileController::class, 'storeCita']);
     Route::post('/citas/{id}/cancel', [MobileController::class, 'cancelCita']);
 });
