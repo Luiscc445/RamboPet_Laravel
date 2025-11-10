@@ -7,10 +7,10 @@ Guía completa para configurar y ejecutar RamboPet (Sistema Veterinario Laravel 
 ## 📋 Requisitos Previos
 
 ### Software Necesario:
-- **PHP 8.2+** (XAMPP o instalación nativa)
+- **PHP 8.2+** con extensión `pdo_pgsql` (XAMPP o instalación nativa)
 - **Composer** (gestor de dependencias PHP)
 - **Node.js 18+** y **npm**
-- **Supabase** (Base de datos PostgreSQL en la nube - ya configurada)
+- **Supabase** (Base de datos PostgreSQL en la nube - **ya configurada**, reemplaza MySQL/XAMPP)
 
 ### Verificar Instalaciones:
 ```bash
@@ -68,26 +68,25 @@ start-tunnel.bat
 # Instalar dependencias PHP
 composer install
 
-# Copiar archivo de configuración
+# Copiar archivo de configuración (ya tiene credenciales de Supabase)
 cp .env.example .env
 
 # Generar clave de aplicación
 php artisan key:generate
 
-# Configurar Supabase en .env
-# DB_CONNECTION=pgsql
-# DB_HOST=tu-proyecto.supabase.co
-# DB_PORT=5432
-# DB_DATABASE=postgres
-# DB_USERNAME=postgres
-# DB_PASSWORD=tu-password
+# Verificar que tienes la extensión PostgreSQL
+php -m | grep pgsql
 
-# Ejecutar migraciones
-php artisan migrate
+# Si no aparece, habilita pdo_pgsql en php.ini (ver CONFIGURAR_SUPABASE.md)
 
-# Ejecutar seeders (crear usuarios y datos de prueba)
-php artisan db:seed
+# Probar conexión a Supabase
+php artisan db:show
+
+# Ejecutar migraciones y seeders (crear tablas y usuarios de prueba)
+php artisan migrate:fresh --seed
 ```
+
+**📘 Guía completa de configuración:** Lee [CONFIGURAR_SUPABASE.md](CONFIGURAR_SUPABASE.md)
 
 ### 2. App Móvil React Native
 

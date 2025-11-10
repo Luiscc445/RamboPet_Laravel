@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Credenciales sensibles
+SUPABASE_CREDENTIALS.md
